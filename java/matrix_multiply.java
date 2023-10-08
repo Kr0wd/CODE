@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class mulm{
+public class matrix_multiply{
     public static void main(String ag[]) {
         int ar, ac, br, bc;
         Scanner sc = new Scanner(System.in);

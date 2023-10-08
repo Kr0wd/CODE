@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class trpm{
+public class transpose_matrix{
     public static void main(String ag[]) {
         int r, c;
         Scanner sc = new Scanner(System.in);

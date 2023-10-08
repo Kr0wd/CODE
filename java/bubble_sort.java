@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class sort{
+public class bubble_sort{
     static void print(int[] arr, int size) {
         for (int i = 0; i < size; i++)
             System.out.println(arr[i]);
