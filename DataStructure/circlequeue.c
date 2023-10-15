@@ -1,69 +1,89 @@
 #include <stdio.h>
 #define MAX_SIZE 5
-char Queue[MAX_SIZE];
-int front = -1;
-int rear = -1;
-void pop()
-{
-    int del_item;
-    if (front == -1)
-    {
-        printf("Queue Underflow\n");
-    }
-    else
-    {
-        del_item = Queue[front];
-        front = front + 1;
-        printf("Pop item = %d\n", del_item);
-        if (front > rear)
-        {
-            front = -1;
-            rear = -1;
-        }
-    }
-}
-void push(int item)
+int q1[MAX_SIZE];
+int front;
+int rear;
+void enqueue(int item)
 {
     if (front == (rear + 1) % MAX_SIZE)
-        printf("Queue overflow\n");
+        printf("Queue is full!\n");
     else
     {
         if (front == -1)
             front = 0;
-        rear = (rear + 1);
-        Queue[rear] = item;
+        rear = (rear + 1) % MAX_SIZE;
+        q1[rear] = item;
+        printf("Element added :%d\n", item);
     }
 }
-void main()
+
+void dequeue()
 {
-    int c, i, item;
-    do
+    if (front == -1)
+        printf("Queue is empty!\n\n");
+    else
     {
-        printf("Type 1:Push 2:Pop 3:Display  4:Exit\n");
-        scanf("%d", &c);
-        switch (c)
+        int del = q1[front];
+        if (front == rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+        else
+            front = (front + 1) % MAX_SIZE;
+        printf("Element deleted :%d\n", del);
+    }
+}
+
+void list()
+{
+    if (front == -1)
+    {
+        printf("Queue is empty!\n\n");
+        return;
+    }
+    printf("Queue elements are :\n");
+    int i = front;
+    while (i != (rear + 1) % MAX_SIZE)
+    {
+        printf("%d \t", q1[i]);
+       i = (i + 1) % MAX_SIZE;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    front = -1;
+    rear = -1;
+    int ch, item;
+    while (1)
+    {
+        printf("Select operation:\n"
+               "1. Enqueue\n2. Dequeue\n"
+               "3. List\n4. Exit\n");
+        scanf("%d", &ch);
+        switch (ch)
         {
         case 1:
-            printf("Enter the item to be pushed\n");
+            printf("Enter item to add:\n");
             scanf("%d", &item);
-            push(item);
+            enqueue(item);
             break;
+
         case 2:
-            pop();
+            dequeue();
             break;
+
         case 3:
-            for (i = front; i <= rear && front != -1; i++)
-            {
-                printf("%d ", Queue[i]);
-            }
-            printf("\n");
-            if (front == -1)
-                printf("Queue is empty\n");
+            list();
             break;
+
         case 4:
-            break;
+            return 0;
+
         default:
-            printf("Invalid input \n");
+            printf("Invalid operation!\nTry again.\n");
         }
-    } while (c != 4);
+    }
 }
