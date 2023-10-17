@@ -1,33 +1,37 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAX_SIZE 100
 #define SIZE 100
-int top=-1;
-int i;
-char stack[SIZE],postfix[SIZE],symbol;
-char pop()
+
+int stack[MAX_SIZE];
+int top = -1;
+
+void push(int obj)
 {
-    if (top>0)
-            printf("underflow\n");
-    else
+    if (top >= MAX_SIZE - 1)
     {
-        top--;
-        return stack[top+1];
+        printf("Stack overflow!\n");
+        exit(-1);
     }
-        
+    top++;
+    stack[top] = obj;
 }
-void push(char symbol)
+
+int pop()
 {
-    if (top>=SIZE-1)
-        printf("overflow\n");
-    else
+    if (top < 0)
     {
-        top++;
-        stack[top]=(symbol-'0');
-        puts(stack);
+        printf("Stack underflow!\n");
+        exit(-1);
     }
+    int del = stack[top];
+    top--;
+    return del;
 }
-int types(char symbol)
+
+int type(char symbol)
 {
     switch (symbol)
     {
@@ -35,56 +39,79 @@ int types(char symbol)
     case '-':
     case '*':
     case '/':
+    case '%':
     case '^':
-        return 1;
-        break;
-    default:
         return 0;
-        break;
+    case ' ':
+    case '\n':
+        return 1;
+    default:
+        return 2;
     }
 }
-int evaluate (char symbol, int y, int x)
+int evaluate(char symbol, int x, int y)
 {
     switch (symbol)
     {
     case '+':
-        return (x+y);
-        break;
+        return y + x;
+
     case '-':
-        return (x-y);
-        break;
+        return y - x;
+
     case '*':
-        return (x*y);
-        break;
+        return y * x;
+
     case '/':
-        return (x/y);
-        break;
+        return y / x;
+
     case '^':
-        return pow(x,y);
-        break;
+        return pow(y, x);
+
     default:
-        break;
+        printf("Invalid operator error!\n");
+        exit(-1);
     }
 }
-void main()
-{   //int i,n;
-    printf("enter");
+
+int int_of(char num)
+{
+    if (num >= '0' && num <= '9')
+        return num - '0';
+
+    else
+    {
+        printf("Character '%c' is not a digit.\n", num);
+        exit(-1);
+    }
+}
+
+int main()
+{
+    char postfix[SIZE];
+
+    printf("Enter postfix representation :");
     gets(postfix);
-    int i=0;
+    printf("You have entered: %s\n", postfix);
+
+    int i = 0;
+    char symbol;
     while ((symbol = postfix[i]) != '\0' && symbol != '\n')
     {
-        switch (types(symbol))
+        switch (type_of(symbol))
         {
-        case '0':
-            push(symbol);
+        case operator:
+            push(evaluate(symbol, pop(), pop()));
             break;
-        case '1':
-            push(evaluate(symbol,pop(),pop()));
-            break;
-        default:
+
+        case operand:
+            push(int_of(symbol));
             break;
         }
-    i++;
+        i++;
     }
-    printf("The evaluvation of the postfix expression %s is: %d\n", postfix, pop());
+
+    printf("The evaluvation of the postfix expression is: %d\n", pop());
+
+    return 0;
 }

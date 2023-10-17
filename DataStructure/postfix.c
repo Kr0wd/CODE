@@ -25,28 +25,6 @@ int precedence(char symbol)
         return -1;
     }
 }
-int highest_precedence()
-{
-    int high = 0;
-    for (int i = top; i >= 0; i--)
-    {
-        char symbol = stack[i];
-        if (symbol == '(')
-            break;
-        int now = precedence(symbol);
-
-        if (now != -1)
-        {
-
-            if (now > high)
-            {
-                high = now;
-            }
-        }
-    }
-    return high;
-}
-
 void push(char symbol)
 {
     if(top>=SIZE-1)
@@ -86,9 +64,9 @@ void append(char symbol)
 int main()
 {
     char del;
+    printf("enter the infix expression:\n");
     gets(infix);
     int len=strlen(infix);
-    
     for (int i=0;i<len;i++)
         {
             char symbol=infix[i];
@@ -99,17 +77,17 @@ int main()
             case '*':
             case '/':
             case '^':
-                    while (top != -1 && highest_precedence()>=precedence(symbol))// checks if the current symbol being scanned has the highest precedence
+                    while (top > -1 && precedence(stack[top]) >= precedence(symbol))
                     {
-                        append(pop());//  prints to postfix
+                        append(pop());
                     }
-                    push(symbol);// pushes to stack
+                    push(symbol);
                     break;
             case '(':
                     push(symbol);
                     break;
             case ')':
-                    while((del = pop()) != '(') //pops all elements and prints them until '(' is encountered.
+                    while((del = pop()) != '(')
                         append(del);
                     break;
             default:
@@ -119,6 +97,7 @@ int main()
     while(top>-1)
         append(pop());
     append('\0');
+    printf("the resultant postfix expression is :\n");
     for(int i=0;i<top_post;i++)
         {
         printf("%c  ",post[i]);

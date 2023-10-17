@@ -2,8 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 #define SIZE 100
-int top=-1,top_post = -1;
-char stack[SIZE],infix[SIZE],post[SIZE],a;
+int top=-1,top_pre = -1;
+char stack[SIZE],infix[SIZE],pre[SIZE],a;
 int precedence(char symbol)
 {
     switch (symbol)
@@ -21,24 +21,6 @@ int precedence(char symbol)
     default:
         return -1;
     }
-}
-int highest_precedence()
-{
-    int high = 0;
-    for (int i = top; i >= 0; i--)
-    {
-        char symbol = stack[i];
-        if (symbol == ')')
-            break;
-        int now = precedence(symbol);
-        if (now != -1)
-        {
-
-            if (now > high)
-                high = now;
-        }
-    }
-    return high;
 }
 void push(char symbol)
 {
@@ -72,8 +54,8 @@ void append(char symbol)
     }
     else
     {
-        top_post++;
-        post[top_post]=symbol;
+        top_pre++;
+        pre[top_pre]=symbol;
     }
 }
 void reverse(char str[])
@@ -91,6 +73,7 @@ void reverse(char str[])
 int main()
 {
     char del;
+    printf("enter the infix expression:\n");
     gets(infix);
     reverse(infix);
     int len=strlen(infix);
@@ -104,7 +87,7 @@ int main()
             case '*':
             case '/':
             case '^':
-                    while (top != -1 && highest_precedence()>precedence(symbol))
+                    while (top > -1 && precedence(stack[top]) > precedence(symbol))
                     {
                         append(pop());
                     }
@@ -124,10 +107,11 @@ int main()
     while(top>-1)
         append(pop());
     append('\0');
-    reverse(post);
-    for(int i=0;i<top_post;i++)
+    reverse(pre);
+    printf("the resultant prefix expression is :\n");
+    for(int i=0;i<top_pre;i++)
         {
-        printf("%c  ",post[i]);
+        printf("%c  ",pre[i]);
         }
         printf("\n");
 return 0;
