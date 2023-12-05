@@ -1,8 +1,8 @@
 #include<stdio.h>
 void main()
 {
-    int a[20][20],b[20][20],t1[20][20],t2[20][20],c[20][20];
-    int r1,c1,r2,c2,i,j,nz1=0,nz2=0,k=0;
+    int a[20][20],b[20][20],triplet1[20][20],triplet2[20][20],sum[20][20];
+    int r1,c1,r2,c2,i,j,k=0,q=0,nz=0;
     printf("enter the first matrix details\n");
     printf("enter the number of rows and colums\n");
     scanf("%d%d",&r1,&c1);
@@ -43,114 +43,114 @@ void main()
     for(i=0;i<r1;i++){
         for (j=0;j<c1;j++){
             if (a[i][j]!=0){
-            nz1++;
-            t1[nz1][0]=i;
-            t1[nz1][1]=j;
-            t1[nz1][2]=a[i][j];
+            k++;
+            triplet1[k][0]=i;
+            triplet1[k][1]=j;
+            triplet1[k][2]=a[i][j];
             }
         }
     }
-    t1[0][0]=r1;
-    t1[0][1]=c1;
-    t1[0][2]=nz1;
+    triplet1[0][0]=r1;
+    triplet1[0][1]=c1;
+    triplet1[0][2]=k;
     printf("the triplet representation of first matrix is:\n");
-    for(i=0;i<=nz1;i++)
+    for(i=0;i<=k;i++)
     {
         for(j=0;j<3;j++)
         {
-            printf("%d\t",t1[i][j]);
+            printf("%d\t",triplet1[i][j]);
         }
     printf("\n");
     }
     for(i=0;i<r2;i++){
         for (j=0;j<c2;j++){
             if (b[i][j]!=0){
-            nz2++;
-            t2[nz2][0]=i;
-            t2[nz2][1]=j;
-            t2[nz2][2]=b[i][j];
+            q++;
+            triplet2[q][0]=i;
+            triplet2[q][1]=j;
+            triplet2[q][2]=b[i][j];
             }
         }
     }
-    t2[0][0]=r2;
-    t2[0][1]=c2;
-    t2[0][2]=nz2;
+    triplet2[0][0]=r2;
+    triplet2[0][1]=c2;
+    triplet2[0][2]=q;
     printf("the triplet representation of second matrix is:\n");
-    for(i=0;i<=nz2;i++)
+    for(i=0;i<=q;i++)
     {
         for(j=0;j<3;j++)
         {
-           printf("%d\t",t2[i][j]);
+           printf("%d\t",triplet2[i][j]);
         }
     printf("\n");
     }
     if(r1==r2 && c1==c2){
         i=1,j=1;
-        while(i<=nz1 && j<=nz2){
-            if(t1[i][0]==t2[j][0]&&t1[i][1]==t2[j][1]){
-                k++;
-                c[k][0]=t1[i][0];
-                c[k][1]=t1[i][1];
-                c[k][2]=t1[i][2]+t2[j][2];
+        while(i<=k && j<=q){
+            if(triplet1[i][0]==triplet2[j][0]&&triplet1[i][1]==triplet2[j][1]){
+                nz++;
+                sum[nz][0]=triplet1[i][0];
+                sum[nz][1]=triplet1[i][1];
+                sum[nz][2]=triplet1[i][2]+triplet2[j][2];
                 i++;
                 j++;
                 }
-            else if(t1[i][0]==t2[j][0]){
-                if (t1[i][1]<t2[j][1]){
-                    k++;
-                    c[k][0]=t1[i][0];
-                    c[k][1]=t1[i][1];
-                    c[k][2]=t1[i][2];
+            else if(triplet1[i][0]==triplet2[j][0]){
+                if (triplet1[i][1]<triplet2[j][1]){
+                    nz++;
+                    sum[nz][0]=triplet1[i][0];
+                    sum[nz][1]=triplet1[i][1];
+                    sum[nz][2]=triplet1[i][2];
                     i++;
                     }
                 else{
-                    k++;
-                    c[k][0]=t2[j][0];
-                    c[k][1]=t2[j][1];
-                    c[k][2]=t2[j][2];
+                    nz++;
+                    sum[nz][0]=triplet2[j][0];
+                    sum[nz][1]=triplet2[j][1];
+                    sum[nz][2]=triplet2[j][2];
                     j++;
                     }  
                 }
             else{
-                if (t1[i][0]<t2[j][0]){
-                    k++;
-                    c[k][0]=t1[i][0];
-                    c[k][1]=t1[i][1];
-                    c[k][2]=t1[i][2];
+                if (triplet1[i][0]<triplet2[j][0]){
+                    nz++;
+                    sum[nz][0]=triplet1[i][0];
+                    sum[nz][1]=triplet1[i][1];
+                    sum[nz][2]=triplet1[i][2];
                     i++;
                     }
                 else{
-                    k++;
-                    c[k][0]=t2[j][0];
-                    c[k][1]=t2[j][1];
-                    c[k][2]=t2[j][2];
+                    nz++;
+                    sum[nz][0]=triplet2[j][0];
+                    sum[nz][1]=triplet2[j][1];
+                    sum[nz][2]=triplet2[j][2];
                     j++;
                     }  
                 }
         }
-    while(i<=nz1){
-        k++;
-        c[k][0]=t1[i][0];
-        c[k][1]=t1[i][1];
-        c[k][2]=t1[i][2];
+    while(i<=k){
+        nz++;
+        sum[nz][0]=triplet1[i][0];
+        sum[nz][1]=triplet1[i][1];
+        sum[nz][2]=triplet1[i][2];
         i++;
         }
-    while(j<=nz2){
-        k++;
-        c[k][0]=t2[j][0];
-        c[k][1]=t2[j][1];
-        c[k][2]=t2[j][2];
+    while(j<=q){
+        nz++;
+        sum[nz][0]=triplet2[j][0];
+        sum[nz][1]=triplet2[j][1];
+        sum[nz][2]=triplet2[j][2];
         j++;
         }
-    c[0][0]=r1;
-    c[0][1]=c1;
-    c[0][2]=k;
+    sum[0][0]=r1;
+    sum[0][1]=c1;
+    sum[0][2]=nz;
     printf("the resultant matrix is :\n");
-    for(i=0;i<=k;i++)
+    for(i=0;i<=nz;i++)
     {
         for(j=0;j<3;j++)
         {
-           printf("%d\t",c[i][j]);
+           printf("%d\t",sum[i][j]);
         }
     printf("\n");
     }

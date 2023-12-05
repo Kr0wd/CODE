@@ -60,8 +60,8 @@ int main()
     while (1)
     {
         printf("Select operation:\n"
-               "1. Enqueue\n2. Dequeue\n"
-               "3. List\n4. Exit\n");
+               "1. Enqueue\t2. Dequeue\n"
+               "3. List\t4. Exit\n");
         scanf("%d", &ch);
         switch (ch)
         {

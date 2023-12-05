@@ -5,7 +5,15 @@ void main()
     printf("enter the number of elements:");
     scanf("%d",&n);
     for (int i=0;i<n;i++)
+    {
         scanf("%d",&a[i]);
+    }
+    printf("The elements are\n");
+    for(int i=0;i<n;i++)
+    { 
+        printf("%d\t",a[i]);
+    }
+    printf("\n");
     printf("element to be searched :");
     scanf("%d",&s);
     int low=0;

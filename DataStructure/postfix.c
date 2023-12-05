@@ -61,11 +61,47 @@ void append(char symbol)
         post[top_post]=symbol;
     }
 }
-int main()
+void posteval()
 {
-    char del;
-    printf("enter the infix expression:\n");
-    gets(infix);
+    int result,i,x,y,val;
+    for (i = 0; i < strlen(post); i++)
+    {
+        if((65<=post[i]&&post[i]<=90)||(97<=post[i]&&post[i]<=122))
+        {
+            printf("Enter the value of %c :",post[i]);
+            scanf("%d",&val);
+            push(val);
+        }
+        else
+        {
+            y =pop();
+            x =pop();
+            switch (post[i])
+            {
+            case '+': 
+                    push(x+y);
+                    break;
+            case '-': 
+                    push(x-y);
+                    break;
+            case '*': 
+                    push(x*y);
+                    break;
+            case '/': 
+                    push(x/y);
+                    break;
+            case '^': 
+                    push(pow(x,y));
+                    break;
+            }
+        }
+    }
+    result=pop();
+    printf("Result = %d\n",result);
+}
+void postfix()
+{
+    char del,symbol;    
     int len=strlen(infix);
     for (int i=0;i<len;i++)
         {
@@ -76,8 +112,14 @@ int main()
             case '-':
             case '*':
             case '/':
-            case '^':
                     while (top > -1 && precedence(stack[top]) >= precedence(symbol))
+                    {
+                        append(pop());
+                    }
+                    push(symbol);
+                    break;
+            case '^':
+                    while (top > -1 && precedence(stack[top]) > precedence(symbol))
                     {
                         append(pop());
                     }
@@ -97,11 +139,13 @@ int main()
     while(top>-1)
         append(pop());
     append('\0');
-    printf("the resultant postfix expression is :\n");
-    for(int i=0;i<top_post;i++)
-        {
-        printf("%c  ",post[i]);
-        }
-        printf("\n");
-        return 0;
+    puts(post); 
+}
+void main()
+{
+    printf("Enter the infix expression\n");
+    gets(infix);
+    printf("Postfix expression : ");
+    postfix(infix);
+    posteval();
 }

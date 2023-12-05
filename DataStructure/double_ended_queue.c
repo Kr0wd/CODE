@@ -20,7 +20,6 @@ void enqueue_front(int item)
         printf("Added %d\n", item);
     }
 }
-
 void enqueue_rear(int item)
 {
     if (front == (rear + 1) % MAX_SIZE)
@@ -34,7 +33,6 @@ void enqueue_rear(int item)
         printf("Added %d\n", item);
     }
 }
-
 void dequeue_front()
 {
     if (front == -1)
@@ -52,7 +50,6 @@ void dequeue_front()
             front = (front + 1) % MAX_SIZE;
     }
 }
-
 void dequeue_rear()
 {
     if (front == -1)
@@ -71,7 +68,6 @@ void dequeue_rear()
         printf("Deleted %d\n", del);
     }
 }
-
 void list()
 {
     if (front == -1)
@@ -88,7 +84,6 @@ void list()
     }
     printf("\n");
 }
-
 int main()
 {
     front = -1;
@@ -97,9 +92,9 @@ int main()
     while (1)
     {
         printf("Select operation:\n"
-               "1. Enqueue via FRONT\n2. Dequeue via FRONT\n"
-               "3. Enqueue via REAR\n4. Dequeue via REAR\n"
-               "5. List\n6. Exit\n");
+               "1. Enqueue via FRONT\t2.Dequeue via FRONT\n"
+               "3. Enqueue via REAR\t4.Dequeue via REAR\n"
+               "5. List\t6. Exit\n");
         scanf("%d", &ch);
         switch (ch)
         {
