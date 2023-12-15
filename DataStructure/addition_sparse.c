@@ -127,6 +127,7 @@ void main()
                     j++;
                     }  
                 }
+            
         }
     while(i<=k){
         nz++;
